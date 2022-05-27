@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Entities.ProductView>
+﻿@model IEnumerable<Entities.OfficiantView>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,22 +16,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id_Product)
+                @Html.DisplayNameFor(model => model.Officiant_Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product_Name)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Exp_Time)
+                @Html.DisplayNameFor(model => model.Hiring_Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Arrivement_Date)
+                @Html.DisplayNameFor(model => model.Level)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cost)
+                @Html.DisplayNameFor(model => model.Phone_Number)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Supplier)
+                @Html.DisplayNameFor(model => model.Birthdate)
             </th>
             <th></th>
         </tr>
@@ -40,31 +40,31 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_Product)
+                @Html.DisplayFor(modelItem => item.Officiant_Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Product_Name)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Exp_Time)
+                @Html.DisplayFor(modelItem => item.Hiring_Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Arrivement_Date)
+                @Html.DisplayFor(modelItem => item.Level)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cost)
+                @Html.DisplayFor(modelItem => item.Phone_Number)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Supplier)
+                @Html.DisplayFor(modelItem => item.Birthdate)
             </td>
             <td>
                 @if (ViewContext.HttpContext.User.IsInRole("admin"))
                 {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id_Product })     
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Officiant_Id })     
                 }
                 @if (ViewContext.HttpContext.User.IsInRole("admin"))
                 {
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id_Product })       
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Officiant_Id })       
                 }
             </td>
         </tr>

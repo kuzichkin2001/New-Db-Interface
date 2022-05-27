@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Entities.OfficiantCostsView>
+
+@{
+    ViewData["Title"] = "GetTotalCosts";
+}
+
+<h1>GetTotalCosts</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Officiant_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalOffersCost)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Officiant_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalOffersCost) ₽
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

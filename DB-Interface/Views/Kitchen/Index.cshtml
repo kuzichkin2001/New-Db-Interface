@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Entities.KitchenView>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@if (ViewContext.HttpContext.User.IsInRole("admin"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Kitchen_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kitchen_Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Kitchen_Id.ToString(), "Details", new { id = item.Kitchen_Id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kitchen_Name)
+            </td>
+            <td>
+                @if (ViewContext.HttpContext.User.IsInRole("admin"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Kitchen_Id })     
+                }
+                @if (ViewContext.HttpContext.User.IsInRole("admin"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Kitchen_Id })       
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
