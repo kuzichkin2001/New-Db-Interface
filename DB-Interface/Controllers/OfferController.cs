@@ -36,15 +36,17 @@ namespace DB_Interface.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Edit(int id)
         {
-            return View();
+            var offer = OfferRepository.GetOffer(id);
+
+            return View(offer);
         }
 
         // POST: OfferController/Edit/5
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Edit(int id, OfferView view)
+        public ActionResult Edit(OfferView view)
         {
-            int result = OfferRepository.EditOffer(view);
+            OfferRepository.EditOffer(view);
 
             return RedirectToAction("Index");
         }
@@ -56,16 +58,10 @@ namespace DB_Interface.Controllers
         }
 
         // POST: OfferController/Delete/5
-        [HttpPost]
         [Authorize(Roles = "admin")]
         public ActionResult Delete(int id)
         {
-            int result = OfferRepository.DeleteOffer(id);
-
-            if (result == 0)
-            {
-                return RedirectToAction("WrongPage");
-            }
+            OfferRepository.DeleteOffer(id);
 
             return RedirectToAction("Index");
         }

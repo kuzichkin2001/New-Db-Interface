@@ -51,7 +51,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Client_Id)
             </td>
-            <td>
+            <td class="own-controllers">
                 @if (ViewContext.HttpContext.User.IsInRole("admin"))
                 {
                     @Html.ActionLink("Edit", "Edit", new { id = item.Offer_Id })     

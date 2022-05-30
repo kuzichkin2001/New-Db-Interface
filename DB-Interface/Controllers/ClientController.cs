@@ -36,7 +36,9 @@ namespace DB_Interface.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Edit(int id)
         {
-            return View();
+            var client = ClientRepository.GetClient(id);
+
+            return View(client);
         }
 
         // POST: ClientController/Edit/5
@@ -44,7 +46,7 @@ namespace DB_Interface.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Edit(int id, ClientView view)
         {
-            int result = ClientRepository.EditClient(view);
+            ClientRepository.EditClient(view);
 
             return RedirectToAction("Index");
         }
@@ -55,16 +57,10 @@ namespace DB_Interface.Controllers
         }
 
         // POST: ClientController/Delete/5
-        [HttpPost]
         [Authorize(Roles = "admin")]
         public ActionResult Delete(int id)
         {
-            int result = ClientRepository.DeleteClient(id);
-
-            if (result == 0)
-            {
-                return RedirectToAction("WrongPage");
-            }
+            ClientRepository.DeleteClient(id);
 
             return RedirectToAction("Index");
         }

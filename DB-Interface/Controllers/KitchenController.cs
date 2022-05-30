@@ -43,7 +43,9 @@ namespace DB_Interface.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult Edit(int id)
         {
-            return View();
+            var kitchen = KitchenRepository.GetKitchen(id);
+            
+            return View(kitchen);
         }
 
         // POST: KitchenController/Edit/5
@@ -51,7 +53,7 @@ namespace DB_Interface.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult Edit(int id, KitchenView kitchenView)
         {
-            int result = KitchenRepository.EditKitchen(kitchenView);
+            KitchenRepository.EditKitchen(kitchenView);
 
             return RedirectToAction("Index");
         }
@@ -67,10 +69,7 @@ namespace DB_Interface.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult Delete(int id)
         {
-            if (KitchenRepository.DeleteKitchen(id) == 0)
-            {
-                return RedirectToAction("WrongPage");
-            }
+            KitchenRepository.DeleteKitchen(id);
             
             return RedirectToAction("Index");
         }

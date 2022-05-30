@@ -65,5 +65,19 @@ namespace DAL
                 return false;
             }
         }
+
+        public static void DeleteUser(int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var query = "DELETE FROM Users WHERE user_id = @ID";
+
+                var param = new DynamicParameters();
+
+                param.Add("ID", id);
+
+                db.Query(query, param);
+            }
+        }
     }
 }

@@ -44,15 +44,17 @@ namespace DB_Interface.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Edit(int id)
         {
-            return View();
+            var discount = DiscountRepository.GetDiscount(id);
+
+            return View(discount);
         }
 
         // POST: DiscountController/Edit/5
         [HttpPost]
         [Authorize(Roles = "admin")]
-        public ActionResult Edit(int id, DiscountView discountView)
+        public ActionResult Edit(DiscountView view)
         {
-            int result = DiscountRepository.EditDiscount(discountView);
+            DiscountRepository.EditDiscount(view);
 
             return RedirectToAction("Index");
         }
@@ -64,16 +66,10 @@ namespace DB_Interface.Controllers
         }
 
         // POST: DiscountController/Delete/5
-        [HttpPost]
         [Authorize(Roles = "admin")]
         public ActionResult Delete(int id)
         {
-            int result = DiscountRepository.DeleteDiscount(id);
-
-            if (result == 0)
-            {
-                return RedirectToAction("WrongPage");
-            }
+            DiscountRepository.DeleteDiscount(id);
 
             return RedirectToAction("Index");
         }

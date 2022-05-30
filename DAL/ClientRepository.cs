@@ -8,6 +8,20 @@ namespace DAL
     {
         private static readonly string _connectionString = @"Server=DESKTOP-0URHI91\SQLEXPRESS;Database=Restaurant;Integrated Security=true";
 
+        public static ClientView GetClient(int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var query = "SELECT * FROM Client WHERE client_id = @ID";
+
+                var param = new DynamicParameters();
+
+                param.Add("ID", id);
+
+                return db.Query<ClientView>(query, param).First();
+            }
+        }
+
         public static IEnumerable<ClientView> GetClients()
         {
             using (var db = new SqlConnection(_connectionString))
@@ -29,29 +43,29 @@ namespace DAL
             }
         }
 
-        public static int EditClient(ClientView view)
+        public static void EditClient(ClientView view)
         {
             using (var db = new SqlConnection(_connectionString))
             {
                 var query = "UPDATE Client SET name = @Name, birthdate = @Birthdate, " +
-                    "phone_number = @Phone_Number, discount_id = @Discount_Id WHERE client_id = @Client_Id; " +
-                    "SELECT SCOPE_IDENTITY();";
+                    "phone_number = @Phone_Number, discount_id = @Discount_Id WHERE client_id = @Client_Id;";
 
-                return db.Query<int>(query, view).First();
+                db.Query(query, view);
             }
         }
 
-        public static int DeleteClient(int id)
+        public static void DeleteClient(int id)
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var query = "DELETE FROM Client WHERE client_id = @Client_Id";
+                var query = "UPDATE Offer SET client_id = @ID + 1 WHERE client_id = @ID;" +
+                    "DELETE FROM Client WHERE client_id = @ID";
 
                 var param = new DynamicParameters();
 
-                param.Add("Client_Id", id);
+                param.Add("ID", id);
 
-                return db.Query<int>(query, param).First();
+                db.Query(query, param);
             }
         }
     }

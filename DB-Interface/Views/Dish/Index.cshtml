@@ -45,7 +45,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Cost)
             </td>
-            <td>
+            <td class="own-controllers">
                 @if (ViewContext.HttpContext.User.IsInRole("admin"))
                 {
                     @Html.ActionLink("Edit", "Edit", new { id = item.Dish_Id })     

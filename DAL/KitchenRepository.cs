@@ -8,6 +8,20 @@ namespace DAL
     {
         private static readonly string _connectionString = @"Server=DESKTOP-0URHI91\SQLEXPRESS;Database=Restaurant;Integrated Security=true";
     
+        public static KitchenView GetKitchen(int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var query = "SELECT * FROM Kitchen WHERE kitchen_id = @ID";
+
+                var param = new DynamicParameters();
+
+                param.Add("ID", id);
+
+                return db.Query<KitchenView>(query, param).First();
+            }
+        }
+        
         public static IEnumerable<DishView> GetDishesByKitchenId(int id)
         {
             using (var db = new SqlConnection(_connectionString))
@@ -42,28 +56,28 @@ namespace DAL
             }
         }
 
-        public static int DeleteKitchen(long kitchenId)
+        public static void DeleteKitchen(long kitchenId)
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var query = "DELETE FROM Kitchen WHERE kitchen_id = @kitchen_id; SELECT SCOPE_IDENTITY();";
+                var query = "UPDATE Dish SET kitchen_id = @ID + 1 WHERE kitchen_id = @ID;" +
+                    "DELETE FROM Kitchen WHERE kitchen_id = @ID;";
 
                 var param = new DynamicParameters();
 
-                param.Add("kitchen_id", kitchenId);
+                param.Add("ID", kitchenId);
 
-                return db.Query<int>(query, param).First();
+                db.Query(query, param);
             }
         }
 
-        public static int EditKitchen(KitchenView kitchenView)
+        public static void EditKitchen(KitchenView kitchenView)
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var query = "UPDATE Kitchen SET kitchen_name = @Kitchen_Name WHERE kitchen_id = @Kitchen_Id; " +
-                    "SELECT SCOPE_IDENTITY()";
+                var query = "UPDATE Kitchen SET kitchen_name = @Kitchen_Name WHERE kitchen_id = @Kitchen_Id;";
 
-                return db.Query<int>(query, kitchenView).First();
+                db.Query(query, kitchenView);
             }
         }
     }

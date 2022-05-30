@@ -36,15 +36,17 @@ namespace DB_Interface.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Edit(int id)
         {
-            return View();
+            var dish = DishRepository.GetDish(id);
+
+            return View(dish);
         }
 
         // POST: DishController/Edit/5
         [HttpPost]
         [Authorize(Roles = "admin")]
-        public ActionResult Edit(int id, DishView view)
+        public ActionResult Edit(DishView view)
         {
-            int result = DishRepository.EditDish(view);
+            DishRepository.EditDish(view);
 
             return RedirectToAction("Index");
         }
@@ -56,16 +58,10 @@ namespace DB_Interface.Controllers
         }
 
         // POST: DishController/Delete/5
-        [HttpPost]
         [Authorize(Roles = "admin")]
         public ActionResult Delete(int id)
         {
-            int result = DishRepository.DeleteDish(id);
-
-            if (result == 0)
-            {
-                return RedirectToAction("WrongPage");
-            }
+            DishRepository.DeleteDish(id);
 
             return RedirectToAction("Index");
         }

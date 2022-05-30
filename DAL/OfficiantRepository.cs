@@ -59,8 +59,7 @@ namespace DAL
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var query = "DELETE FROM Dish_List WHERE offer_id = @ID;\n" +
-                    "DELETE FROM Offer WHERE offer_id = @ID OR officiant_id = @ID;\n" +
+                var query = "UPDATE Offer SET officiant_id = @ID + 1 WHERE officiant_id = @ID;" +
                     "DELETE FROM Officiant WHERE officiant_id = @ID;\n";
 
                 var param = new DynamicParameters();

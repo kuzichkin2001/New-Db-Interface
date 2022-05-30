@@ -33,7 +33,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Kitchen_Name)
             </td>
-            <td>
+            <td class="own-controllers">
                 @if (ViewContext.HttpContext.User.IsInRole("admin"))
                 {
                     @Html.ActionLink("Edit", "Edit", new { id = item.Kitchen_Id })     

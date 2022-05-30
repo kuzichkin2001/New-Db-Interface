@@ -21,3 +21,27 @@ body {
     display: flex;
     justify-content: flex-end;
 }
+
+.authorize-section > .nav-item {
+    width: 25%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.own-controllers {
+    display: flex;
+}
+
+.own-controllers > a {
+    padding: 5px 16px;
+    margin-right: 20px;
+    background-color: #C0F5FA;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: .15s ease-in-out;
+}
+
+.own-controllers > a:hover {
+    background-color: #BD8B9C;
+    color: white;
+}

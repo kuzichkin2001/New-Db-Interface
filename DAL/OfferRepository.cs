@@ -8,6 +8,20 @@ namespace DAL
     {
         private static readonly string _connectionString = @"Server=DESKTOP-0URHI91\SQLEXPRESS;Database=Restaurant;Integrated Security=true";
 
+        public static OfferView GetOffer(int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var query = "SELECT * FROM Offer WHERE offer_id = @ID";
+
+                var param = new DynamicParameters();
+
+                param.Add("ID", id);
+
+                return db.Query<OfferView>(query, param).First();
+            }
+        }
+
         public static IEnumerable<OfferView> GetOffers()
         {
             using (var db = new SqlConnection(_connectionString))
@@ -29,28 +43,29 @@ namespace DAL
             }
         }
 
-        public static int EditOffer(OfferView view)
+        public static void EditOffer(OfferView view)
         {
             using (var db = new SqlConnection(_connectionString))
             {
                 var query = "UPDATE Offer SET offer_time = @Offer_Time, price = @Price, officiant_id = @Officiant_Id, " +
-                    "client_id = @Client_Id WHERE offer_id = @Offer_Id; SELECT SCOPE_IDENTITY();";
+                    "client_id = @Client_Id WHERE offer_id = @Offer_Id;";
 
-                return db.Query<int>(query, view).First();
+                db.Query(query, view);
             }
         }
 
-        public static int DeleteOffer(int id)
+        public static void DeleteOffer(int id)
         {
             using (var db = new SqlConnection(_connectionString))
             {
-                var query = "DELETE FROM Offer WHERE offer_id = @Offer_Id; SELECT SCOPE_IDENTITY();";
+                var query = "DELETE FROM Dish_LIST WHERE offer_id = @ID;" +
+                    "DELETE FROM Offer WHERE offer_id = @ID;";
 
                 var param = new DynamicParameters();
 
-                param.Add("Offer_Id", id);
+                param.Add("ID", id);
 
-                return db.Query<int>(query, param).First();
+                db.Query(query, param);
             }
         }
     }

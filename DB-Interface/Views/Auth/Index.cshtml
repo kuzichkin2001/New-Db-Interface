@@ -6,12 +6,6 @@
 
 <h1>Список пользователей</h1>
 
-@if (ViewContext.HttpContext.User.IsInRole("admin"))
-{
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-}
 <table class="table">
     <thead>
         <tr>
@@ -51,11 +45,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Role)
             </td>
-            <td>
-                @if (ViewContext.HttpContext.User.IsInRole("admin"))
-                {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.User_Id })     
-                }
+            <td class="own-controllers">
                 @if (ViewContext.HttpContext.User.IsInRole("admin"))
                 {
                     @Html.ActionLink("Delete", "Delete", new { id = item.User_Id })       

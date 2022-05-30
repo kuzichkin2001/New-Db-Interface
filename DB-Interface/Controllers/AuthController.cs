@@ -4,6 +4,7 @@ using DAL;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DB_Interface.Controllers
 {
@@ -31,7 +32,7 @@ namespace DB_Interface.Controllers
         {
             int result = UserRepository.RegisterUser(credentials);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Login");
         }
 
         // GET: /<controller>/Login
@@ -75,6 +76,14 @@ namespace DB_Interface.Controllers
             await HttpContext.SignOutAsync();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize(Roles = "admin")]
+        public IActionResult Delete(int id)
+        {
+            UserRepository.DeleteUser(id);
+
+            return RedirectToAction("Index");
         }
     }
 }
