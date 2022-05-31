@@ -54,7 +54,7 @@
                         @if (ViewContext.HttpContext.User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <p class="text-dark">@ViewContext.HttpContext.User.Identity.Name</p>
+                                <p class="nav-link text-dark">@ViewContext.HttpContext.User.Identity.Name</p>
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Logout</a>
                             </li>
                         }

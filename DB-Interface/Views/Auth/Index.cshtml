@@ -46,7 +46,7 @@
                 @Html.DisplayFor(modelItem => item.Role)
             </td>
             <td class="own-controllers">
-                @if (ViewContext.HttpContext.User.IsInRole("admin"))
+                @if (ViewContext.HttpContext.User.IsInRole("admin") && !ViewContext.HttpContext.User.Identity.Name.Equals(item.Username))
                 {
                     @Html.ActionLink("Delete", "Delete", new { id = item.User_Id })       
                 }
